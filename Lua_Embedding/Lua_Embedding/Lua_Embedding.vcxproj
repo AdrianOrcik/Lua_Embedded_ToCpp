@@ -132,6 +132,7 @@
     <ClInclude Include="Lua535\include\lua.hpp" />
     <ClInclude Include="Lua535\include\luaconf.h" />
     <ClInclude Include="Lua535\include\lualib.h" />
+    <ClInclude Include="src\Components\GameObject.h" />
     <ClInclude Include="src\lua.hpp" />
   </ItemGroup>
   <ItemGroup>

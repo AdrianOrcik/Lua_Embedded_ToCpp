@@ -1,6 +1,8 @@
 #include "src/lua.hpp"
 #include <iostream>
 #include <string>
+#include <assert.h>
+#include "src/Components/GameObject.h"
 
 bool IsLuaValid(lua_State *L, int result) 
 {
@@ -50,26 +52,110 @@ static void DEBUG_stackDump(lua_State *L, const char* header = nullptr) {
 	printf("\n");  /* end the listing */
 }
 
+#pragma region CODE
+//struct GameObject {
+//	int x;
+//	int y;
+//
+//	void Move(int _x, int _y) {
+//		x = _x;
+//		y = _y;
+//		std::cout << "Position: " << x << "," << y << std::endl;
+//	}
+//};
+
+//int lua_CreateGameObject(lua_State* L) {
+//	GameObject* gameObject = (GameObject*)lua_newuserdata(L, sizeof(GameObject));
+//	gameObject->x = 0;
+//	gameObject->y = 0;
+//	
+//	return 1;
+//}
+//
+//int lua_MoveGameObject(lua_State* L) {
+//	GameObject* gameobject = (GameObject*)lua_touserdata(L,1);
+//	int x = lua_tonumber(L, 2);
+//	int y = lua_tonumber(L, 3);
+//
+//	gameobject->Move(x, y);
+//	return 1;
+//}
+//
+//
+//int lua_Sum(lua_State* L) {
+//	
+//	int a = lua_tonumber(L, 1);
+//	int b = lua_tonumber(L, 2);
+//
+//	std::cout << a << " " << b << std::endl;
+//	int c = a + b;
+//	lua_pushnumber(L, c);
+//	return 1;
+//}
+
+
+//struct GameObject_Table {
+//
+//	static int __add(lua_State* L) {
+//
+//		lua_pushstring(L, "x");
+//		lua_gettable(L, -3);
+//		int xLeft = lua_tonumber(L, -1);
+//		lua_pop(L, 1);
+//
+//		lua_pushstring(L, "x");
+//		lua_gettable(L, -2);
+//		int xRight = lua_tonumber(L, -1);
+//		lua_pop(L, 1);
+//
+//		int xAdded = xLeft + xRight;
+//		std::cout << xAdded << std::endl;
+//
+//		GameObject_Table::CreateGameObject(L);
+//		lua_pushstring(L, "x");
+//		lua_pushnumber(L, xAdded);
+//		lua_rawset(L, -3); //Set table without invoking
+//		return 1;
+//	}
+//
+//	static int CreateGameObject(lua_State* L) {
+//		
+//		lua_newtable(L);
+//
+//		lua_pushstring(L, "x");
+//		lua_pushnumber(L, 0);
+//		lua_settable(L, -3);
+//
+//
+//		lua_pushstring(L, "y");
+//		lua_pushnumber(L, 0);
+//		lua_settable(L, -3);
+//
+//		luaL_getmetatable(L, "GameObjectMetaTable");
+//		lua_setmetatable(L, -2);
+//
+//		return 1;
+//	}
+//
+//};
+
+#pragma endregion CODE
+
 int main() 
 {
 	lua_State *L = luaL_newstate();
-	luaL_openlibs(L); //Add general libs what programmer can use
+	luaL_openlibs(L); 
 	luaopen_debug(L);
+
+	Lua_Init_GameObject(L);
 
 	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
 	if (IsLuaValid(L, lua_source))
 	{
-		lua_getglobal(L, "a");
-		lua_getglobal(L, "Return4");
-		DEBUG_stackDump(L);
-		if (lua_isfunction(L, -1)) {
-			lua_pcall(L, 0, 1,0);
-			DEBUG_stackDump(L);
-			int a = lua_tonumber(L, -1);
-			DEBUG_stackDump(L);
-			std::cout << a << std::endl;
-		}
+
+
 	}
+	
 
 	lua_close(L);
 	return 0;
