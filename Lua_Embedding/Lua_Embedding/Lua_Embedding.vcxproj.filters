@@ -56,4 +56,8 @@
   <ItemGroup>
     <Library Include="Lua535\liblua53.a" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Sprites\File.txt" />
+    <Text Include="src\Sprites\File2.txt" />
+  </ItemGroup>
 </Project>

@@ -3,6 +3,9 @@
 #include <string>
 #include <assert.h>
 #include "src/Components/GameObject.h"
+#include <Windows.h>
+#include <time.h> 
+#include <cstdlib>
 
 bool IsLuaValid(lua_State *L, int result) 
 {
@@ -141,22 +144,118 @@ static void DEBUG_stackDump(lua_State *L, const char* header = nullptr) {
 
 #pragma endregion CODE
 
+const unsigned char RohVpravoDole = 0xd9;     // ostatne si zistite sami!
+
+
+#include <iostream>
+#include <fstream>
+
+#include <string>
+
+std::string getFileContents(std::ifstream&);            //Gets file contents
+
+//TODO: make string array which will be keep characters
+std::string getFileContents(std::ifstream& File)
+{
+	std::string Lines = "";        //All lines
+	int tmp_line = 0;
+	if (File)                      //Check if everything is good
+	{
+		while (File.good())
+		{
+			std::string TempLine;               
+			std::getline(File, TempLine);
+			TempLine += "\n";
+			Lines += TempLine;
+		}
+		return Lines;
+	}
+	else                           //Return error
+	{
+		return "ERROR File does not exist.";
+	}
+}
+
+std::string* getFileContentsArr(std::ifstream& File, int imgSize)
+{
+	std::string* art = new std::string[imgSize];
+	int tmp_line = 0;
+	if (File) 
+	{
+		while (File.good()) {
+			std::string tempLine;
+			std::getline(File, tempLine);
+			art[tmp_line] = tempLine;
+			tmp_line++;
+		}
+		return art;
+	}
+
+	return nullptr;
+}
+
+void Draw(HANDLE hConsole, COORD position, std::string* sprite, int size)
+{
+	for (int i = 0; i < size; i++) {
+
+		SetConsoleCursorPosition(hConsole, position);
+		std::cout << sprite[i] << std::endl;
+		position.Y++;
+	}
+}
+
+
+struct Point {
+	int x;
+	int y;
+};
+
 int main() 
 {
-	lua_State *L = luaL_newstate();
-	luaL_openlibs(L); 
-	luaopen_debug(L);
 
-	Lua_Init_GameObject(L);
+	std::ifstream Reader1("src/Sprites/File.txt");  
+	std::ifstream Reader2("src/Sprites/File2.txt");
 
-	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
-	if (IsLuaValid(L, lua_source))
+	std::string* tank1 = getFileContentsArr(Reader1, 3);
+	std::string* tank2 = getFileContentsArr(Reader2, 3);
+
+	Reader1.close();
+	Reader2.close();
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD tank1Coord, tank2Coord;
+	tank1Coord.X = 10; 
+	tank1Coord.Y = 22;
+
+	tank2Coord.X = 50;
+	tank2Coord.Y = 22;
+
+	while (true)
 	{
-
-
+		Sleep(500);
+		std::system("cls");
+		Draw(hConsole, tank1Coord, tank1,3);
+		Draw(hConsole, tank2Coord, tank2,3);
+		tank1Coord.X++;
+		tank2Coord.X--;
 	}
-	
 
-	lua_close(L);
+
+
+	//lua_State *L = luaL_newstate();
+	//luaL_openlibs(L); 
+	//luaopen_debug(L);
+
+	//Lua_Init_GameObject(L);
+
+	//int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
+	//if (IsLuaValid(L, lua_source))
+	//{
+
+
+	//}
+	//
+
+	//lua_close(L);
 	return 0;
 }
