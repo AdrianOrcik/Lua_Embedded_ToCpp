@@ -216,11 +216,22 @@ int main()
 	std::ifstream Reader1("src/Sprites/File.txt");  
 	std::ifstream Reader2("src/Sprites/File2.txt");
 
+	std::ifstream Explosion_1("src/Sprites/Explosion_1.txt");
+	std::ifstream Explosion_2("src/Sprites/Explosion_2.txt");
+	std::ifstream Explosion_3("src/Sprites/Explosion_3.txt");
+
 	std::string* tank1 = getFileContentsArr(Reader1, 3);
 	std::string* tank2 = getFileContentsArr(Reader2, 3);
 
+	std::string* explosion_1 = getFileContentsArr(Explosion_1, 4);
+	std::string* explosion_2 = getFileContentsArr(Explosion_2, 4);
+	std::string* explosion_3 = getFileContentsArr(Explosion_3, 4);
+
 	Reader1.close();
 	Reader2.close();
+	Explosion_1.close();
+	Explosion_2.close();
+	Explosion_3.close();
 
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD tank1Coord, tank2Coord;
@@ -232,12 +243,26 @@ int main()
 
 	while (true)
 	{
-		Sleep(500);
+		Draw(hConsole, tank1Coord, tank1, 3);
+		Sleep(1000);
 		std::system("cls");
-		Draw(hConsole, tank1Coord, tank1,3);
-		Draw(hConsole, tank2Coord, tank2,3);
-		tank1Coord.X++;
-		tank2Coord.X--;
+		Draw(hConsole, tank1Coord, explosion_1, 4);
+		Sleep(100);
+		std::system("cls");
+		Draw(hConsole, tank1Coord, explosion_2, 4);
+		Sleep(100);
+		std::system("cls");
+		Draw(hConsole, tank1Coord, explosion_3, 4);
+		Sleep(100);
+		std::system("cls");
+		Sleep(100);
+
+		//Sleep(500);
+		//std::system("cls");
+		//Draw(hConsole, tank1Coord, tank1,3);
+		//Draw(hConsole, tank2Coord, tank2,3);
+		//tank1Coord.X++;
+		//tank2Coord.X--;
 	}
 
 

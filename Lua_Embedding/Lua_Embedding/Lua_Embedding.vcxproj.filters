@@ -59,5 +59,8 @@
   <ItemGroup>
     <Text Include="src\Sprites\File.txt" />
     <Text Include="src\Sprites\File2.txt" />
+    <Text Include="src\Sprites\Explosion_3.txt" />
+    <Text Include="src\Sprites\Explosion_1.txt" />
+    <Text Include="src\Sprites\Explosion_2.txt" />
   </ItemGroup>
 </Project>
