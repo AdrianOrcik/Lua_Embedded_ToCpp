@@ -3,6 +3,7 @@
 #include <string>
 #include <assert.h>
 #include "src/Components/GameObject.h"
+#include "src/Components/ASCIIRenderer.h"
 #include <Windows.h>
 #include <time.h> 
 #include <cstdlib>
@@ -152,29 +153,29 @@ const unsigned char RohVpravoDole = 0xd9;     // ostatne si zistite sami!
 
 #include <string>
 
-std::string getFileContents(std::ifstream&);            //Gets file contents
+std::string getFileContents(std::ifstream&);          
 
-//TODO: make string array which will be keep characters
-std::string getFileContents(std::ifstream& File)
-{
-	std::string Lines = "";        //All lines
-	int tmp_line = 0;
-	if (File)                      //Check if everything is good
-	{
-		while (File.good())
-		{
-			std::string TempLine;               
-			std::getline(File, TempLine);
-			TempLine += "\n";
-			Lines += TempLine;
-		}
-		return Lines;
-	}
-	else                           //Return error
-	{
-		return "ERROR File does not exist.";
-	}
-}
+
+//std::string getFileContents(std::ifstream& File)
+//{
+//	std::string Lines = "";       
+//	int tmp_line = 0;
+//	if (File)           
+//	{
+//		while (File.good())
+//		{
+//			std::string TempLine;               
+//			std::getline(File, TempLine);
+//			TempLine += "\n";
+//			Lines += TempLine;
+//		}
+//		return Lines;
+//	}
+//	else                       
+//	{
+//		return "ERROR File does not exist.";
+//	}
+//}
 
 std::string* getFileContentsArr(std::ifstream& File, int imgSize)
 {
@@ -194,6 +195,25 @@ std::string* getFileContentsArr(std::ifstream& File, int imgSize)
 	return nullptr;
 }
 
+std::string* getFileContentsArr_Path(const std::string filePath, int imgSize)
+{
+	std::ifstream reader(filePath);
+	std::string* art = new std::string[imgSize];
+	int tmp_line = 0;
+	if (reader)
+	{
+		while (reader.good()) {
+			std::string tempLine;
+			std::getline(reader, tempLine);
+			art[tmp_line] = tempLine;
+			tmp_line++;
+		}
+		reader.close();
+		return art;
+	}
+	return nullptr;
+}
+
 void Draw(HANDLE hConsole, COORD position, std::string* sprite, int size)
 {
 	for (int i = 0; i < size; i++) {
@@ -210,77 +230,75 @@ struct Point {
 	int y;
 };
 
-int main() 
+
+void CPP_TEST()
 {
+	//std::string* tank1 = getFileContentsArr_Path("src/Sprites/File.txt", 3);
+	//std::string* tank2 = getFileContentsArr_Path("src/Sprites/File2.txt", 3);
 
-	std::ifstream Reader1("src/Sprites/File.txt");  
-	std::ifstream Reader2("src/Sprites/File2.txt");
+	//std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Explosion_1.txt", 4);
+	//std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Explosion_2.txt", 4);
+	//std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Explosion_3.txt", 4);
 
-	std::ifstream Explosion_1("src/Sprites/Explosion_1.txt");
-	std::ifstream Explosion_2("src/Sprites/Explosion_2.txt");
-	std::ifstream Explosion_3("src/Sprites/Explosion_3.txt");
+	//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	//COORD tank1Coord, tank2Coord;
+	//tank1Coord.X = 10; 
+	//tank1Coord.Y = 22;
 
-	std::string* tank1 = getFileContentsArr(Reader1, 3);
-	std::string* tank2 = getFileContentsArr(Reader2, 3);
+	//tank2Coord.X = 50;
+	//tank2Coord.Y = 22;
 
-	std::string* explosion_1 = getFileContentsArr(Explosion_1, 4);
-	std::string* explosion_2 = getFileContentsArr(Explosion_2, 4);
-	std::string* explosion_3 = getFileContentsArr(Explosion_3, 4);
 
-	Reader1.close();
-	Reader2.close();
-	Explosion_1.close();
-	Explosion_2.close();
-	Explosion_3.close();
+	//Draw(hConsole, tank1Coord, tank1, 3);
+	//while (true)
+	//{
+	//	Draw(hConsole, tank1Coord, tank1, 3);
+	//	Sleep(1000);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_1, 4);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_2, 4);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_3, 4);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Sleep(100);
 
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD tank1Coord, tank2Coord;
-	tank1Coord.X = 10; 
-	tank1Coord.Y = 22;
+	//	//Sleep(500);
+	//	//std::system("cls");
+	//	//Draw(hConsole, tank1Coord, tank1,3);
+	//	//Draw(hConsole, tank2Coord, tank2,3);
+	//	//tank1Coord.X++;
+	//	//tank2Coord.X--;
+	//}
+}
 
-	tank2Coord.X = 50;
-	tank2Coord.Y = 22;
+void Lua_Test()
+{
+	lua_State *L = luaL_newstate();
+	luaL_openlibs(L);
+	luaopen_debug(L);
 
-	while (true)
+	//Lua_Init_GameObject(L);
+	Lua_Init_ASCIIRenderer(L);
+
+	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
+	if (IsLuaValid(L, lua_source))
 	{
-		Draw(hConsole, tank1Coord, tank1, 3);
-		Sleep(1000);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_1, 4);
-		Sleep(100);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_2, 4);
-		Sleep(100);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_3, 4);
-		Sleep(100);
-		std::system("cls");
-		Sleep(100);
 
-		//Sleep(500);
-		//std::system("cls");
-		//Draw(hConsole, tank1Coord, tank1,3);
-		//Draw(hConsole, tank2Coord, tank2,3);
-		//tank1Coord.X++;
-		//tank2Coord.X--;
+
 	}
 
 
+	lua_close(L);
+}
 
-	//lua_State *L = luaL_newstate();
-	//luaL_openlibs(L); 
-	//luaopen_debug(L);
-
-	//Lua_Init_GameObject(L);
-
-	//int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
-	//if (IsLuaValid(L, lua_source))
-	//{
-
-
-	//}
-	//
-
-	//lua_close(L);
+int main() 
+{
+	CPP_TEST();
+	//Lua_Test();
+	
 	return 0;
 }
