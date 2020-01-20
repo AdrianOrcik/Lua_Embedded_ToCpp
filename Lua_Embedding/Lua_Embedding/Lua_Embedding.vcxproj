@@ -132,8 +132,10 @@
     <ClInclude Include="Lua535\include\lua.hpp" />
     <ClInclude Include="Lua535\include\luaconf.h" />
     <ClInclude Include="Lua535\include\lualib.h" />
-    <ClInclude Include="src\Components\ASCIIRenderer.h" />
-    <ClInclude Include="src\Components\GameObject.h" />
+    <ClInclude Include="src\Components\Lua_Sprite.h" />
+    <ClInclude Include="src\Components\Lua_GameObject.h" />
+    <ClInclude Include="src\Components\Lua_Console.h" />
+    <ClInclude Include="src\DebugLuaStack.h" />
     <ClInclude Include="src\lua.hpp" />
   </ItemGroup>
   <ItemGroup>

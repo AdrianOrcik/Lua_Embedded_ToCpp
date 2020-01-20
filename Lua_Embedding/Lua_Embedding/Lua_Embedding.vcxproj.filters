@@ -49,10 +49,16 @@
     <ClInclude Include="src\lua.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\GameObject.h">
+    <ClInclude Include="src\Components\Lua_Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ASCIIRenderer.h">
+    <ClInclude Include="src\Components\Lua_Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Lua_GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugLuaStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

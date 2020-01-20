@@ -2,8 +2,12 @@
 #include <iostream>
 #include <string>
 #include <assert.h>
-#include "src/Components/GameObject.h"
-#include "src/Components/ASCIIRenderer.h"
+
+#include "src/Components/Lua_GameObject.h"
+#include "src/Components/Lua_Sprite.h"
+#include "src/Components/Lua_Console.h"
+#include "src/DebugLuaStack.h"
+
 #include <Windows.h>
 #include <time.h> 
 #include <cstdlib>
@@ -17,43 +21,6 @@ bool IsLuaValid(lua_State *L, int result)
 		return false;
 	}
 	return true;
-}
-
-static void DEBUG_stackDump(lua_State *L, const char* header = nullptr) {
-	lua_Debug ar;
-	int i;
-	int top = lua_gettop(L);
-
-	if (header != nullptr) std::cout << "--" << header << std::endl;
-	std::cout << "--begin-stack: " << std::endl;
-	for (i = 1; i <= top; i++) {  /* repeat for each level */
-		int t = lua_type(L, i);
-		int reverse_index = ((top - (i - 1))*-1);
-		
-		switch (t) {
-			case LUA_TSTRING:  /* strings */
-				printf("TString - [%d] [`%s'] [%d]", i,lua_tostring(L, i), reverse_index);
-				break;
-			case LUA_TBOOLEAN:  /* booleans */
-				printf("TBool - [%d] [%s] [%d]", i,lua_toboolean(L, i) ? "true" : "false", reverse_index);
-				break;
-			case LUA_TNUMBER:  /* numbers */
-				printf("TNumber - [%d] [%s - %g ] [%d] ", i,lua_typename(L,t), lua_tonumber(L, i) ,reverse_index);
-				break;
-			case LUA_TFUNCTION: /* function*/
-				//lua_getinfo(L, ">S", &ar);
-				printf("TFunction - [%d] [%s] [%d]", i, lua_typename(L, t), reverse_index);
-				break;
-			default:  /* other values */
-				printf("Other - [%d] [%s] [%d]", i, lua_typename(L, t), reverse_index);
-				break;
-		}
-
-		printf("\n");
-	}
-
-	std::cout << "--end-stack: " << std::endl;
-	printf("\n");  /* end the listing */
 }
 
 #pragma region CODE
@@ -150,7 +117,6 @@ const unsigned char RohVpravoDole = 0xd9;     // ostatne si zistite sami!
 
 #include <iostream>
 #include <fstream>
-
 #include <string>
 
 std::string getFileContents(std::ifstream&);          
@@ -248,29 +214,33 @@ void CPP_TEST()
 	tank2Coord.X = 50;
 	tank2Coord.Y = 22;
 
-	while (true)
-	{
-		Draw(hConsole, tank1Coord, tank1, 3);
-		Sleep(1000);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_1, 4);
-		Sleep(100);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_2, 4);
-		Sleep(100);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_3, 4);
-		Sleep(100);
-		std::system("cls");
-		Sleep(100);
+	Draw(hConsole, tank1Coord, tank1, 3);
+	Sleep(1000);
+	std::system("cls");
 
-		//Sleep(500);
-		//std::system("cls");
-		//Draw(hConsole, tank1Coord, tank1,3);
-		//Draw(hConsole, tank2Coord, tank2,3);
-		//tank1Coord.X++;
-		//tank2Coord.X--;
-	}
+	//while (true)
+	//{
+	//	Draw(hConsole, tank1Coord, tank1, 3);
+	//	Sleep(1000);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_1, 4);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_2, 4);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_3, 4);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Sleep(100);
+
+	//	//Sleep(500);
+	//	//std::system("cls");
+	//	//Draw(hConsole, tank1Coord, tank1,3);
+	//	//Draw(hConsole, tank2Coord, tank2,3);
+	//	//tank1Coord.X++;
+	//	//tank2Coord.X--;
+	//}
 }
 
 void Lua_Test()
@@ -279,9 +249,10 @@ void Lua_Test()
 	luaL_openlibs(L);
 	luaopen_debug(L);
 
-	//Lua_Init_GameObject(L);
+	Lua_Init_GameObject(L);
 	Lua_Init_Sprite(L);
-
+	Lua_Init_Console(L);
+	
 	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
 	if (IsLuaValid(L, lua_source))
 	{
