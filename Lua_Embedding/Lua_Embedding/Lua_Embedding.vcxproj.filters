@@ -66,10 +66,10 @@
     <Library Include="Lua535\liblua53.a" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Sprites\File.txt" />
-    <Text Include="src\Sprites\File2.txt" />
     <Text Include="src\Sprites\Explosion_3.txt" />
     <Text Include="src\Sprites\Explosion_1.txt" />
     <Text Include="src\Sprites\Explosion_2.txt" />
+    <Text Include="src\Sprites\Tank_1.txt" />
+    <Text Include="src\Sprites\Tank_2.txt" />
   </ItemGroup>
 </Project>

@@ -36,6 +36,11 @@ struct Lua_Sprite
 			m_SpriteHeight = imgSize;
 			reader.close();
 		}
+		else
+		{
+			std::cout << "ERROR::LUA_SPRITE::LOAD_SPRITE::File path was not found!" << std::endl;
+			std::cout << "PATH::" << filePath << std::endl;
+		}
 	}
 
 	void Draw(int x, int y)

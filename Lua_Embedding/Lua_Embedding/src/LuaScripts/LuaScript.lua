@@ -10,8 +10,13 @@
 
 
 Tank1 = Sprite.Create()
-Tank1:LoadSprite("src/Sprites/File.txt",3)
+Tank1:LoadSprite("src/Sprites/Tank_1.txt",3)
 Tank1:Draw(10,15)
 
-Console.Sleep(2)
-Console.Clear()
+Tank2 = Sprite.Create()
+Tank2:LoadSprite("src/Sprites/Tank2.txt",3)
+Tank2:Draw(50,15)
+
+
+--Console.Sleep(2)
+--Console.Clear()
