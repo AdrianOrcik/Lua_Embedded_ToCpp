@@ -196,51 +196,103 @@ struct Point {
 	int y;
 };
 
+#define GRAVITY -9.8
+#define PI 3.14159265
+double DegToRad(double degres)
+{
+	return (degres * PI) / 180;
+}
+
+double MaxHeight(double initSpeed, double directionAngle)
+{
+	return abs((pow(initSpeed, 2.0) *  pow(sin(DegToRad(directionAngle)), 2.0)) / (2.0 * GRAVITY));
+}
+
+double MaxDistance(double initSpeed, double directionAngle)
+{
+	return abs(((pow(initSpeed, 2.0)*pow(sin(DegToRad(directionAngle)), 2.0)) / GRAVITY));
+}
+
+double PositionXInTime(double inTime, double speed, double directionAngle, double initXValue = 0)
+{
+	return initXValue + (speed * inTime * cos(DegToRad(directionAngle)));
+}
+
+double PositionYInTime(double inTime, double speed, double directionAngle, double initYValue = 0)
+{
+	return initYValue + (speed * inTime * sin(DegToRad(directionAngle))) - ((GRAVITY * pow(inTime, 2)) * 0.5);
+}
+
+double TimeToHitMaxHeight(double speed, double directionAngle)
+{
+	return abs(speed * sin(DegToRad(directionAngle)) / GRAVITY);
+}
+
+double TimeToHitMaxDistance(double speed, double directionAngle)
+{
+	return abs(2 * speed * sin(DegToRad(directionAngle)) / GRAVITY);
+}
 
 void CPP_TEST()
 {
-	std::string* tank1 = getFileContentsArr_Path("src/Sprites/File.txt", 3);
-	std::string* tank2 = getFileContentsArr_Path("src/Sprites/File2.txt", 3);
+	//TODO: absolute value from results
+	std::cout << MaxHeight(10.0, 45.0) << std::endl; //2.5
+	std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
 
-	std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Explosion_1.txt", 4);
-	std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Explosion_2.txt", 4);
-	std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Explosion_3.txt", 4);
+	//Time is default 1s
+	std::cout << PositionXInTime(1.0, 10.0, 45.0) << std::endl; //?? //2.62 (half from MaxDistance) 
+	std::cout << PositionYInTime(1.0, 10.0, 45.0) << std::endl; //??
 
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD tank1Coord, tank2Coord;
-	tank1Coord.X = 10; 
-	tank1Coord.Y = 22;
+	std::cout << TimeToHitMaxHeight(10.0, 45.0) << std::endl; //?? 
+	std::cout << TimeToHitMaxDistance(10.0, 45.0) << std::endl; //?? 
 
-	tank2Coord.X = 50;
-	tank2Coord.Y = 22;
+	std::cout << "Projectile Test" << std::endl;
+	std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
+	std::cout << MaxDistance(10.0, 55.0) << std::endl; //5.10
+	std::cout << MaxDistance(10.0, 65.0) << std::endl; //5.10
 
-	Draw(hConsole, tank1Coord, tank1, 3);
-	Sleep(1000);
-	std::system("cls");
+	//std::string* tank1 = getFileContentsArr_Path("src/Sprites/File.txt", 3);
+	//std::string* tank2 = getFileContentsArr_Path("src/Sprites/File2.txt", 3);
 
-	//while (true)
-	//{
-	//	Draw(hConsole, tank1Coord, tank1, 3);
-	//	Sleep(1000);
-	//	std::system("cls");
-	//	Draw(hConsole, tank1Coord, explosion_1, 4);
-	//	Sleep(100);
-	//	std::system("cls");
-	//	Draw(hConsole, tank1Coord, explosion_2, 4);
-	//	Sleep(100);
-	//	std::system("cls");
-	//	Draw(hConsole, tank1Coord, explosion_3, 4);
-	//	Sleep(100);
-	//	std::system("cls");
-	//	Sleep(100);
+	//std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Explosion_1.txt", 4);
+	//std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Explosion_2.txt", 4);
+	//std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Explosion_3.txt", 4);
 
-	//	//Sleep(500);
-	//	//std::system("cls");
-	//	//Draw(hConsole, tank1Coord, tank1,3);
-	//	//Draw(hConsole, tank2Coord, tank2,3);
-	//	//tank1Coord.X++;
-	//	//tank2Coord.X--;
-	//}
+	//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	//COORD tank1Coord, tank2Coord;
+	//tank1Coord.X = 10; 
+	//tank1Coord.Y = 22;
+
+	//tank2Coord.X = 50;
+	//tank2Coord.Y = 22;
+
+	//Draw(hConsole, tank1Coord, tank1, 3);
+	//Sleep(1000);
+	//std::system("cls");
+
+	////while (true)
+	////{
+	////	Draw(hConsole, tank1Coord, tank1, 3);
+	////	Sleep(1000);
+	////	std::system("cls");
+	////	Draw(hConsole, tank1Coord, explosion_1, 4);
+	////	Sleep(100);
+	////	std::system("cls");
+	////	Draw(hConsole, tank1Coord, explosion_2, 4);
+	////	Sleep(100);
+	////	std::system("cls");
+	////	Draw(hConsole, tank1Coord, explosion_3, 4);
+	////	Sleep(100);
+	////	std::system("cls");
+	////	Sleep(100);
+
+	////	//Sleep(500);
+	////	//std::system("cls");
+	////	//Draw(hConsole, tank1Coord, tank1,3);
+	////	//Draw(hConsole, tank2Coord, tank2,3);
+	////	//tank1Coord.X++;
+	////	//tank2Coord.X--;
+	////}
 }
 
 void Lua_Test()
@@ -266,8 +318,8 @@ void Lua_Test()
 
 int main() 
 {
-	//CPP_TEST();
-	Lua_Test();
+	CPP_TEST();
+	//Lua_Test();
 	
 	return 0;
 }
