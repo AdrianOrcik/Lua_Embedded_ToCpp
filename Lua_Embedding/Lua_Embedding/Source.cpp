@@ -235,64 +235,65 @@ double TimeToHitMaxDistance(double speed, double directionAngle)
 
 void CPP_TEST()
 {
-	//TODO: absolute value from results
-	std::cout << MaxHeight(10.0, 45.0) << std::endl; //2.5
-	std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
+	////TODO: absolute value from results
+	//std::cout << MaxHeight(10.0, 45.0) << std::endl; //2.5
+	//std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
 
-	//Time is default 1s
-	std::cout << PositionXInTime(1.0, 10.0, 45.0) << std::endl; //?? //2.62 (half from MaxDistance) 
-	std::cout << PositionYInTime(1.0, 10.0, 45.0) << std::endl; //??
+	////Time is default 1s
+	//std::cout << PositionXInTime(1.0, 10.0, 45.0) << std::endl; //?? //2.62 (half from MaxDistance) 
+	//std::cout << PositionYInTime(1.0, 10.0, 45.0) << std::endl; //??
 
-	std::cout << TimeToHitMaxHeight(10.0, 45.0) << std::endl; //?? 
-	std::cout << TimeToHitMaxDistance(10.0, 45.0) << std::endl; //?? 
+	//std::cout << TimeToHitMaxHeight(10.0, 45.0) << std::endl; //?? 
+	//std::cout << TimeToHitMaxDistance(10.0, 45.0) << std::endl; //?? 
 
-	std::cout << "Projectile Test" << std::endl;
-	std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
-	std::cout << MaxDistance(10.0, 55.0) << std::endl; //5.10
-	std::cout << MaxDistance(10.0, 65.0) << std::endl; //5.10
+	//std::cout << "Projectile Test" << std::endl;
+	//std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
+	//std::cout << MaxDistance(10.0, 55.0) << std::endl; //5.10
+	//std::cout << MaxDistance(10.0, 65.0) << std::endl; //5.10
 
-	//std::string* tank1 = getFileContentsArr_Path("src/Sprites/File.txt", 3);
-	//std::string* tank2 = getFileContentsArr_Path("src/Sprites/File2.txt", 3);
+	//std::string* tank1 = getFileContentsArr_Path("src/Sprites/Tank_1.txt", 3);
+	////std::string* tank2 = getFileContentsArr_Path("src/Sprites/File2.txt", 3);
 
-	//std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Explosion_1.txt", 4);
-	//std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Explosion_2.txt", 4);
-	//std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Explosion_3.txt", 4);
+	//std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Tank_Shot_1.txt", 3);
+	//std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Tank_Shot_2.txt", 3);
+	//std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Tank_Shot_3.txt", 3);
 
 	//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	//COORD tank1Coord, tank2Coord;
 	//tank1Coord.X = 10; 
 	//tank1Coord.Y = 22;
 
-	//tank2Coord.X = 50;
-	//tank2Coord.Y = 22;
+	////Draw(hConsole, tank1Coord, tank1, 3);
+	////Sleep(1000);
+	////std::system("cls");
 
-	//Draw(hConsole, tank1Coord, tank1, 3);
-	//Sleep(1000);
-	//std::system("cls");
+	//while (true)
+	//{
+	//	Draw(hConsole, tank1Coord, tank1, 3);
+	//	Sleep(1000);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_1, 3);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_2, 3);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, explosion_3, 3);
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Sleep(100);
+	//	std::system("cls");
+	//	Draw(hConsole, tank1Coord, tank1, 3);
+	//	Sleep(5000);
 
-	////while (true)
-	////{
-	////	Draw(hConsole, tank1Coord, tank1, 3);
-	////	Sleep(1000);
-	////	std::system("cls");
-	////	Draw(hConsole, tank1Coord, explosion_1, 4);
-	////	Sleep(100);
-	////	std::system("cls");
-	////	Draw(hConsole, tank1Coord, explosion_2, 4);
-	////	Sleep(100);
-	////	std::system("cls");
-	////	Draw(hConsole, tank1Coord, explosion_3, 4);
-	////	Sleep(100);
-	////	std::system("cls");
-	////	Sleep(100);
 
-	////	//Sleep(500);
-	////	//std::system("cls");
-	////	//Draw(hConsole, tank1Coord, tank1,3);
-	////	//Draw(hConsole, tank2Coord, tank2,3);
-	////	//tank1Coord.X++;
-	////	//tank2Coord.X--;
-	////}
+	//	//Sleep(500);
+	//	//std::system("cls");
+	//	//Draw(hConsole, tank1Coord, tank1,3);
+	//	//Draw(hConsole, tank2Coord, tank2,3);
+	//	//tank1Coord.X++;
+	//	//tank2Coord.X--;
+	//}
 }
 
 void Lua_Test()

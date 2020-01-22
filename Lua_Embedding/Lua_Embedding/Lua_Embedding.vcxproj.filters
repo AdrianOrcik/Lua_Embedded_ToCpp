@@ -71,5 +71,8 @@
     <Text Include="src\Sprites\Explosion_2.txt" />
     <Text Include="src\Sprites\Tank_1.txt" />
     <Text Include="src\Sprites\Tank_2.txt" />
+    <Text Include="src\Sprites\Tank_Shot_1.txt" />
+    <Text Include="src\Sprites\Tank_Shot_2.txt" />
+    <Text Include="src\Sprites\Tank_Shot_3.txt" />
   </ItemGroup>
 </Project>

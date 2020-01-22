@@ -19,6 +19,7 @@ struct Lua_Sprite
 
 	~Lua_Sprite() {}
 
+	//TODO: calcualte imgSize automatic
 	void LoadSprite(const std::string filePath, int imgSize)
 	{
 		std::ifstream reader(filePath);
