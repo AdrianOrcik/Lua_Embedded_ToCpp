@@ -23,3 +23,9 @@
 --
 --Console.Sleep(2)
 --Console.Clear()
+
+--canvas = Canvas.Create()
+--canvas:Text(10,15,"Test")
+--input = canvas:InputField_Float(10,16,"Test input:")
+--print(string.format("input: %.1f",input))
+--print(input)

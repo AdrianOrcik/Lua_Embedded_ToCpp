@@ -136,6 +136,7 @@
     <ClInclude Include="src\Components\Lua_Sprite.h" />
     <ClInclude Include="src\Components\Lua_GameObject.h" />
     <ClInclude Include="src\Components\Lua_Console.h" />
+    <ClInclude Include="src\Components\Lua_UI.h" />
     <ClInclude Include="src\DebugLuaStack.h" />
     <ClInclude Include="src\lua.hpp" />
   </ItemGroup>

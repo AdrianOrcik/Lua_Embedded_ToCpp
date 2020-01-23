@@ -8,6 +8,7 @@
 #include "src/Components/Lua_Console.h"
 #include "src/DebugLuaStack.h"
 #include "src/Components/Lua_Math.h"
+#include "src/Components/Lua_UI.h"
 
 #include <Windows.h>
 #include <time.h> 
@@ -122,28 +123,6 @@ const unsigned char RohVpravoDole = 0xd9;     // ostatne si zistite sami!
 
 std::string getFileContents(std::ifstream&);          
 
-
-//std::string getFileContents(std::ifstream& File)
-//{
-//	std::string Lines = "";       
-//	int tmp_line = 0;
-//	if (File)           
-//	{
-//		while (File.good())
-//		{
-//			std::string TempLine;               
-//			std::getline(File, TempLine);
-//			TempLine += "\n";
-//			Lines += TempLine;
-//		}
-//		return Lines;
-//	}
-//	else                       
-//	{
-//		return "ERROR File does not exist.";
-//	}
-//}
-
 std::string* getFileContentsArr(std::ifstream& File, int imgSize)
 {
 	std::string* art = new std::string[imgSize];
@@ -236,18 +215,48 @@ float TimeToHitMaxDistance(float speed, float directionAngle)
 }
 #pragma endregion MathDemo
 
+
+
+void Text(HANDLE handle, COORD coord, const std::string text) 
+{
+	SetConsoleCursorPosition(handle, coord);
+	std::cout << text << std::endl;
+}
+
+int InputField_int(HANDLE handle, COORD coord, const std::string text)
+{
+	int value = 0;
+	SetConsoleCursorPosition(handle, coord);
+	std::cout << text << " ";
+	std::cin >> value;
+	return value;
+}
+
 void CPP_TEST()
 {
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD tank1Coord, tank2Coord;
+	tank1Coord.X = 10; 
+	tank1Coord.Y = 22;
+
+	Text(hConsole, COORD{10,22}, "Testovaci text na obrazovke s poziciou");
+	int value = InputField_int(hConsole, COORD{ 10,23 }, "Test Input Bellow:");
+	std::cout << value << std::endl;
+	//Draw(hConsole, tank1Coord, tank1, 3);
+
+
+
 	//TODO: absolute value from results
-	std::cout << MaxHeight(10.0, 45.0) << std::endl; //2.5
-	std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
+	//std::cout << MaxHeight(10.0, 45.0) << std::endl; //2.5
+	//std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
 
 	//Time is default 1s
-	std::cout << PositionXInTime(1.0, 10.0, 45.0) << std::endl; //?? //2.62 (half from MaxDistance) 
-	std::cout << PositionYInTime(1.0, 10.0, 45.0) << std::endl; //??
+	//std::cout << PositionXInTime(1.0, 10.0, 45.0) << std::endl; //?? //2.62 (half from MaxDistance) 
+	//std::cout << PositionYInTime(1.0, 10.0, 45.0) << std::endl; //??
 
-	std::cout << TimeToHitMaxHeight(10.0, 45.0) << std::endl; //?? 
-	std::cout << TimeToHitMaxDistance(10.0, 45.0) << std::endl; //?? 
+	//std::cout << TimeToHitMaxHeight(10.0, 45.0) << std::endl; //?? 
+	//std::cout << TimeToHitMaxDistance(10.0, 45.0) << std::endl; //?? 
 
 	//std::cout << "Projectile Test" << std::endl;
 	//std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
@@ -309,6 +318,7 @@ void Lua_Test()
 	Lua_Init_Sprite(L);
 	Lua_Init_Console(L);
 	Lua_Init_Math(L);
+	Lua_Init_UI(L);
 	
 	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
 	if (IsLuaValid(L, lua_source))
@@ -316,7 +326,6 @@ void Lua_Test()
 
 
 	}
-
 
 	lua_close(L);
 }
