@@ -61,6 +61,9 @@
     <ClInclude Include="src\DebugLuaStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Components\Lua_Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Lua535\liblua53.a" />

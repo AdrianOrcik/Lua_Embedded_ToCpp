@@ -7,6 +7,7 @@
 #include "src/Components/Lua_Sprite.h"
 #include "src/Components/Lua_Console.h"
 #include "src/DebugLuaStack.h"
+#include "src/Components/Lua_Math.h"
 
 #include <Windows.h>
 #include <time.h> 
@@ -196,55 +197,57 @@ struct Point {
 	int y;
 };
 
+#pragma region MathDemo
 #define GRAVITY -9.8
 #define PI 3.14159265
-double DegToRad(double degres)
+float DegToRad(float degres)
 {
 	return (degres * PI) / 180;
 }
 
-double MaxHeight(double initSpeed, double directionAngle)
+float MaxHeight(float initSpeed, float directionAngle)
 {
 	return abs((pow(initSpeed, 2.0) *  pow(sin(DegToRad(directionAngle)), 2.0)) / (2.0 * GRAVITY));
 }
 
-double MaxDistance(double initSpeed, double directionAngle)
+float MaxDistance(float initSpeed, float directionAngle)
 {
 	return abs(((pow(initSpeed, 2.0)*pow(sin(DegToRad(directionAngle)), 2.0)) / GRAVITY));
 }
 
-double PositionXInTime(double inTime, double speed, double directionAngle, double initXValue = 0)
+float PositionXInTime(float inTime, float speed, float directionAngle, float initXValue = 0)
 {
 	return initXValue + (speed * inTime * cos(DegToRad(directionAngle)));
 }
 
-double PositionYInTime(double inTime, double speed, double directionAngle, double initYValue = 0)
+float PositionYInTime(float inTime, float speed, float directionAngle, float initYValue = 0)
 {
 	return initYValue + (speed * inTime * sin(DegToRad(directionAngle))) - ((GRAVITY * pow(inTime, 2)) * 0.5);
 }
 
-double TimeToHitMaxHeight(double speed, double directionAngle)
+float TimeToHitMaxHeight(float speed, float directionAngle)
 {
 	return abs(speed * sin(DegToRad(directionAngle)) / GRAVITY);
 }
 
-double TimeToHitMaxDistance(double speed, double directionAngle)
+float TimeToHitMaxDistance(float speed, float directionAngle)
 {
 	return abs(2 * speed * sin(DegToRad(directionAngle)) / GRAVITY);
 }
+#pragma endregion MathDemo
 
 void CPP_TEST()
 {
-	////TODO: absolute value from results
-	//std::cout << MaxHeight(10.0, 45.0) << std::endl; //2.5
-	//std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
+	//TODO: absolute value from results
+	std::cout << MaxHeight(10.0, 45.0) << std::endl; //2.5
+	std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
 
-	////Time is default 1s
-	//std::cout << PositionXInTime(1.0, 10.0, 45.0) << std::endl; //?? //2.62 (half from MaxDistance) 
-	//std::cout << PositionYInTime(1.0, 10.0, 45.0) << std::endl; //??
+	//Time is default 1s
+	std::cout << PositionXInTime(1.0, 10.0, 45.0) << std::endl; //?? //2.62 (half from MaxDistance) 
+	std::cout << PositionYInTime(1.0, 10.0, 45.0) << std::endl; //??
 
-	//std::cout << TimeToHitMaxHeight(10.0, 45.0) << std::endl; //?? 
-	//std::cout << TimeToHitMaxDistance(10.0, 45.0) << std::endl; //?? 
+	std::cout << TimeToHitMaxHeight(10.0, 45.0) << std::endl; //?? 
+	std::cout << TimeToHitMaxDistance(10.0, 45.0) << std::endl; //?? 
 
 	//std::cout << "Projectile Test" << std::endl;
 	//std::cout << MaxDistance(10.0, 45.0) << std::endl; //5.10
@@ -305,6 +308,7 @@ void Lua_Test()
 	Lua_Init_GameObject(L);
 	Lua_Init_Sprite(L);
 	Lua_Init_Console(L);
+	Lua_Init_Math(L);
 	
 	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
 	if (IsLuaValid(L, lua_source))
@@ -319,8 +323,8 @@ void Lua_Test()
 
 int main() 
 {
-	CPP_TEST();
-	//Lua_Test();
+	//CPP_TEST();
+	Lua_Test();
 	
 	return 0;
 }
