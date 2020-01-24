@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <assert.h>
+#include "../Components/Lua_Sprite.h"
 
 struct Lua_GameObject
 {
@@ -31,6 +32,48 @@ int Lua_GameObject_Create(lua_State* L)
 	luaL_getmetatable(L, "GameObject_MetaTable");
 	lua_setmetatable(L, -2);
 	return 1;
+}
+
+int Lua_GameObject_GetProperties(lua_State* L)
+{
+	//TODO: deep understand
+	Lua_GameObject* gameObject = (Lua_GameObject*)lua_touserdata(L, -2);
+	const char* value = lua_tostring(L, -1);
+
+	if (strcmp(value, "x") == 0)
+	{
+		lua_pushnumber(L, gameObject->x);
+		return 1;
+	}
+	else if (strcmp(value, "y") == 0)
+	{
+		lua_pushnumber(L, gameObject->y);
+		return 1;
+	}
+	else {
+		lua_getglobal(L, "GameObject");
+		lua_pushstring(L, value);
+		lua_rawget(L, -2);
+		return 1;
+	}
+}
+
+int Lua_GameObject_SetProperties(lua_State* L)
+{
+	//TODO: deep understand
+	Lua_GameObject* gameObject = (Lua_GameObject*)lua_touserdata(L, -3);
+	const char* value = lua_tostring(L, -2);
+	if (strcmp(value, "x") == 0) {
+		gameObject->x = (int)lua_tonumber(L, -1);
+		return 1;
+	}else if (strcmp(value, "y") == 0) {
+		gameObject->y = (int)lua_tonumber(L, -1);
+		return 1;
+	}
+	else {
+		//Object propety doesnt exist
+		assert(false);
+	}
 }
 
 int Lua_GameObject_Destroy(lua_State* L)
@@ -80,6 +123,10 @@ void Lua_Init_GameObject(lua_State* L)
 	lua_settable(L, -3);
 
 	lua_pushstring(L, "__index");
-	lua_pushvalue(L, gameObject_Table_ID);
+	lua_pushcfunction(L, Lua_GameObject_GetProperties);
+	lua_settable(L, -3);
+
+	lua_pushstring(L, "__newindex");
+	lua_pushcfunction(L, Lua_GameObject_SetProperties);
 	lua_settable(L, -3);
 }

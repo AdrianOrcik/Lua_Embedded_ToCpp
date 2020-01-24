@@ -24,6 +24,12 @@
 --Console.Sleep(2)
 --Console.Clear()
 
+-- player = GameObject.Create()
+-- player:Move(5,7)
+-- player:Draw()
+-- print(player.x)
+-- player.x = 10
+-- print(player.x)
 
 --canvas = Canvas.Create()
 --mainText = "Value: " .. tostring(5)
