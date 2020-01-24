@@ -68,7 +68,7 @@ int Lua_Math_MaxDistance(lua_State* L)
 {
 	float initSpeed = lua_tonumber(L, -2);
 	float directionAngle = lua_tonumber(L, -1);
-	float maxDistance = Lua_Math::MaxHeight(initSpeed, directionAngle);
+	float maxDistance = Lua_Math::MaxDistance(initSpeed, directionAngle);
 	lua_pushnumber(L, maxDistance);
 	return 1;
 }

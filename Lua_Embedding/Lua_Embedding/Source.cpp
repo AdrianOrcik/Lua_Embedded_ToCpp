@@ -240,9 +240,9 @@ void CPP_TEST()
 	tank1Coord.X = 10; 
 	tank1Coord.Y = 22;
 
-	Text(hConsole, COORD{10,22}, "Testovaci text na obrazovke s poziciou");
-	int value = InputField_int(hConsole, COORD{ 10,23 }, "Test Input Bellow:");
-	std::cout << value << std::endl;
+	//Text(hConsole, COORD{10,22}, "Testovaci text na obrazovke s poziciou");
+	//int value = InputField_int(hConsole, COORD{ 10,23 }, "Test Input Bellow:");
+	//std::cout << value << std::endl;
 	//Draw(hConsole, tank1Coord, tank1, 3);
 
 
@@ -263,12 +263,12 @@ void CPP_TEST()
 	//std::cout << MaxDistance(10.0, 55.0) << std::endl; //5.10
 	//std::cout << MaxDistance(10.0, 65.0) << std::endl; //5.10
 
-	//std::string* tank1 = getFileContentsArr_Path("src/Sprites/Tank_1.txt", 3);
+	std::string* tank1 = getFileContentsArr_Path("src/Sprites/Tank_1.txt", 3);
 	////std::string* tank2 = getFileContentsArr_Path("src/Sprites/File2.txt", 3);
 
-	//std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Tank_Shot_1.txt", 3);
-	//std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Tank_Shot_2.txt", 3);
-	//std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Tank_Shot_3.txt", 3);
+	std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Tank_Shot_1.txt", 3);
+	std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Tank_Shot_2.txt", 3);
+	std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Tank_Shot_3.txt", 3);
 
 	//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	//COORD tank1Coord, tank2Coord;
@@ -279,33 +279,33 @@ void CPP_TEST()
 	////Sleep(1000);
 	////std::system("cls");
 
-	//while (true)
-	//{
-	//	Draw(hConsole, tank1Coord, tank1, 3);
-	//	Sleep(1000);
-	//	std::system("cls");
-	//	Draw(hConsole, tank1Coord, explosion_1, 3);
-	//	Sleep(100);
-	//	std::system("cls");
-	//	Draw(hConsole, tank1Coord, explosion_2, 3);
-	//	Sleep(100);
-	//	std::system("cls");
-	//	Draw(hConsole, tank1Coord, explosion_3, 3);
-	//	Sleep(100);
-	//	std::system("cls");
-	//	Sleep(100);
-	//	std::system("cls");
-	//	Draw(hConsole, tank1Coord, tank1, 3);
-	//	Sleep(5000);
+	while (true)
+	{
+		Draw(hConsole, tank1Coord, tank1, 3);
+		Sleep(1000);
+		std::system("cls");
+		Draw(hConsole, tank1Coord, explosion_1, 3);
+		Sleep(100);
+		std::system("cls");
+		Draw(hConsole, tank1Coord, explosion_2, 3);
+		Sleep(100);
+		std::system("cls");
+		Draw(hConsole, tank1Coord, explosion_3, 3);
+		Sleep(100);
+		std::system("cls");
+		Sleep(100);
+		std::system("cls");
+		Draw(hConsole, tank1Coord, tank1, 3);
+		Sleep(5000);
 
 
-	//	//Sleep(500);
-	//	//std::system("cls");
-	//	//Draw(hConsole, tank1Coord, tank1,3);
-	//	//Draw(hConsole, tank2Coord, tank2,3);
-	//	//tank1Coord.X++;
-	//	//tank2Coord.X--;
-	//}
+		//Sleep(500);
+		//std::system("cls");
+		//Draw(hConsole, tank1Coord, tank1,3);
+		//Draw(hConsole, tank2Coord, tank2,3);
+		//tank1Coord.X++;
+		//tank2Coord.X--;
+	}
 }
 
 void Lua_Test()
@@ -333,7 +333,9 @@ void Lua_Test()
 int main() 
 {
 	//CPP_TEST();
+	//std::cout << MaxDistance(40.0, 45.0) << std::endl; //81
 	Lua_Test();
+
 	
 	return 0;
 }
