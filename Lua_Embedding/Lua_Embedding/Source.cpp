@@ -13,6 +13,7 @@
 #include <Windows.h>
 #include <time.h> 
 #include <cstdlib>
+#include <vector>
 
 bool IsLuaValid(lua_State *L, int result) 
 {
@@ -141,6 +142,24 @@ std::string* getFileContentsArr(std::ifstream& File, int imgSize)
 	return nullptr;
 }
 
+void getFileContentsArr_ToAnimationSheet(const std::string filePath, int imgSize, std::vector<std::string*>* animationSheet)
+{
+	std::ifstream reader(filePath);
+	std::string* art = new std::string[imgSize];
+	int tmp_line = 0;
+	if (reader)
+	{
+		while (reader.good()) {
+			std::string tempLine;
+			std::getline(reader, tempLine);
+			art[tmp_line] = tempLine;
+			tmp_line++;
+		}
+		reader.close();
+		animationSheet->push_back(art);
+	}
+}
+
 std::string* getFileContentsArr_Path(const std::string filePath, int imgSize)
 {
 	std::ifstream reader(filePath);
@@ -232,6 +251,31 @@ int InputField_int(HANDLE handle, COORD coord, const std::string text)
 	return value;
 }
 
+void BeforeAnimation(HANDLE hconsole, COORD position, std::string* sprite, int imgHeight, int beforeAnimDelay)
+{
+	std::system("cls");
+	Draw(hconsole, position, sprite, imgHeight);
+	Sleep(beforeAnimDelay);
+}
+
+void AnimateSheet(HANDLE hconsole, COORD position, std::vector<std::string*>* animationSheet, int imgHeight, int animationDelay)
+{
+	std::system("cls");
+	for (int i = 0; i < animationSheet->size(); i++)
+	{
+		Draw(hconsole, position, animationSheet->at(i), imgHeight);
+		Sleep(animationDelay);
+		std::system("cls");
+	}
+}
+
+void AfterAnimation(HANDLE hconsole, COORD position, std::string* sprite, int imgHeight, int afterAnimDelay)
+{
+	std::system("cls");
+	Draw(hconsole, position, sprite, imgHeight);
+	Sleep(afterAnimDelay);
+}
+
 void CPP_TEST()
 {
 
@@ -239,6 +283,8 @@ void CPP_TEST()
 	COORD tank1Coord, tank2Coord;
 	tank1Coord.X = 10; 
 	tank1Coord.Y = 22;
+
+	std::vector<std::string*> animationSheet;
 
 	//Text(hConsole, COORD{10,22}, "Testovaci text na obrazovke s poziciou");
 	//int value = InputField_int(hConsole, COORD{ 10,23 }, "Test Input Bellow:");
@@ -270,6 +316,10 @@ void CPP_TEST()
 	std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Tank_Shot_2.txt", 3);
 	std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Tank_Shot_3.txt", 3);
 
+	getFileContentsArr_ToAnimationSheet("src/Sprites/Tank_Shot_1.txt", 3, &animationSheet);
+	getFileContentsArr_ToAnimationSheet("src/Sprites/Tank_Shot_2.txt", 3, &animationSheet);
+	getFileContentsArr_ToAnimationSheet("src/Sprites/Tank_Shot_3.txt", 3, &animationSheet);
+
 	//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	//COORD tank1Coord, tank2Coord;
 	//tank1Coord.X = 10; 
@@ -279,24 +329,28 @@ void CPP_TEST()
 	////Sleep(1000);
 	////std::system("cls");
 
+
 	while (true)
 	{
-		Draw(hConsole, tank1Coord, tank1, 3);
-		Sleep(1000);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_1, 3);
-		Sleep(100);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_2, 3);
-		Sleep(100);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, explosion_3, 3);
-		Sleep(100);
-		std::system("cls");
-		Sleep(100);
-		std::system("cls");
-		Draw(hConsole, tank1Coord, tank1, 3);
-		Sleep(5000);
+		//Draw(hConsole, tank1Coord, tank1, 3);
+		//Sleep(1000);
+		//std::system("cls");
+		//Draw(hConsole, tank1Coord, explosion_1, 3);
+		//Sleep(100);
+		//std::system("cls");
+		//Draw(hConsole, tank1Coord, explosion_2, 3);
+		//Sleep(100);
+		//std::system("cls");
+		//Draw(hConsole, tank1Coord, explosion_3, 3);
+		//Sleep(100);
+		//std::system("cls");
+		BeforeAnimation(hConsole, tank1Coord, tank1, 3, 1000);
+		AnimateSheet(hConsole, tank1Coord, &animationSheet,3,100);
+		AfterAnimation(hConsole, tank1Coord, tank1, 3, 1000);
+		//Sleep(100);
+		//std::system("cls");
+		//Draw(hConsole, tank1Coord, tank1, 3);
+		//Sleep(5000);
 
 
 		//Sleep(500);
@@ -329,9 +383,9 @@ void Lua_Test()
 
 int main() 
 {
-	//CPP_TEST();
+	CPP_TEST();
 	//std::cout << MaxDistance(40.0, 45.0) << std::endl; //81
-	Lua_Test();
+	//Lua_Test();
 
 	
 	return 0;
