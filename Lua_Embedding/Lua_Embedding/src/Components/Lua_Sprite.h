@@ -8,9 +8,9 @@
 
 struct Lua_Sprite
 {
-	std::string* m_Sprite;
-	int m_SpriteHeight;
-	HANDLE m_Handler;
+	std::string*	m_Sprite;
+	int				m_SpriteHeight;
+	HANDLE			m_Handler;
 
 	Lua_Sprite() 
 	{

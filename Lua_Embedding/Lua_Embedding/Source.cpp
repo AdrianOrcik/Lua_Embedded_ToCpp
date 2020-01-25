@@ -9,6 +9,7 @@
 #include "src/DebugLuaStack.h"
 #include "src/Components/Lua_Math.h"
 #include "src/Components/Lua_UI.h"
+#include "src/Components/Lua_Animator.h"
 
 #include <Windows.h>
 #include <time.h> 
@@ -312,9 +313,9 @@ void CPP_TEST()
 	std::string* tank1 = getFileContentsArr_Path("src/Sprites/Tank_1.txt", 3);
 	////std::string* tank2 = getFileContentsArr_Path("src/Sprites/File2.txt", 3);
 
-	std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Tank_Shot_1.txt", 3);
-	std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Tank_Shot_2.txt", 3);
-	std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Tank_Shot_3.txt", 3);
+	//std::string* explosion_1 = getFileContentsArr_Path("src/Sprites/Tank_Shot_1.txt", 3);
+	//std::string* explosion_2 = getFileContentsArr_Path("src/Sprites/Tank_Shot_2.txt", 3);
+	//std::string* explosion_3 = getFileContentsArr_Path("src/Sprites/Tank_Shot_3.txt", 3);
 
 	getFileContentsArr_ToAnimationSheet("src/Sprites/Tank_Shot_1.txt", 3, &animationSheet);
 	getFileContentsArr_ToAnimationSheet("src/Sprites/Tank_Shot_2.txt", 3, &animationSheet);
@@ -344,9 +345,9 @@ void CPP_TEST()
 		//Draw(hConsole, tank1Coord, explosion_3, 3);
 		//Sleep(100);
 		//std::system("cls");
-		BeforeAnimation(hConsole, tank1Coord, tank1, 3, 1000);
+		//BeforeAnimation(hConsole, tank1Coord, tank1, 3, 1000);
 		AnimateSheet(hConsole, tank1Coord, &animationSheet,3,100);
-		AfterAnimation(hConsole, tank1Coord, tank1, 3, 1000);
+		//AfterAnimation(hConsole, tank1Coord, tank1, 3, 1000);
 		//Sleep(100);
 		//std::system("cls");
 		//Draw(hConsole, tank1Coord, tank1, 3);
@@ -373,19 +374,21 @@ void Lua_Test()
 	Lua_Init_Console(L);
 	Lua_Init_Math(L);
 	Lua_Init_UI(L);
+	Lua_Init_Animator(L);
 	
 	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
 	if (IsLuaValid(L, lua_source))
 	{
 	}
 	lua_close(L);
+	std::cout << "OK" << std::endl;
 }
 
 int main() 
 {
-	CPP_TEST();
+	//CPP_TEST();
 	//std::cout << MaxDistance(40.0, 45.0) << std::endl; //81
-	//Lua_Test();
+	Lua_Test();
 
 	
 	return 0;
