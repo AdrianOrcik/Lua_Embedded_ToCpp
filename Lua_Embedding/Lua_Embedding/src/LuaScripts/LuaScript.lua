@@ -39,23 +39,64 @@
 --print(string.format("input: %.1f",input))
 --print(input)
 
---Test Game implementation
--- UICanvas = Canvas.Create()
--- UICanvas:Text(0,0,"Tank Shot 2D - Embedded Lua to CPP")
 
--- Player = Sprite.Create()
--- Player:LoadSprite("src/Sprites/Tank_1.txt",3)
--- Player:Draw(5,10)
+--Functions
+UICanvas    = Canvas.Create()
 
--- Enemy = Sprite.Create()
--- Enemy:LoadSprite("src/Sprites/Tank_2.txt",3)
--- Enemy:Draw(100,10)
+Player      = Sprite.Create()
+Player:LoadSprite("src/Sprites/Tank_1.txt",3)
 
--- UICanvas:Text(81,12,".")
+EnemyObj    = GameObject.Create()
+Enemy       = Sprite.Create()
+Enemy:LoadSprite("src/Sprites/Tank_2.txt",3)
+EnemyHealth = 2
 
--- UICanvas:Text(0,19,"Player Shot Parameters (Angle, Speed)")
--- playerAngle = UICanvas:InputField_Int(0,20,"Angle: ")
--- playerSpeed = UICanvas:InputField_Int(0,21,"Speed: ")
--- distance = Math.MaxDistance(playerSpeed,playerAngle)
--- print(distance)
+function IsEnemyInDistance(_distance, _enemyPos)
+        local min = _distance - 5
+        local max = _distance + 5
+        if((_enemyPos >= min) and (_enemyPos <= max))
+            then return true end
+    do return false end
+end
 
+function EnemySetPosition(_x,_y)
+    EnemyObj.x = _x
+    EnemyObj.y = _y
+end
+
+
+function Game()
+    UICanvas:Text(0,0,"Tank Shot 2D - Embedded Lua to CPP")
+    
+    EnemySetPosition(80,10)
+    if EnemyHealth > 0 then 
+        UICanvas:Text(EnemyObj.x + 2,EnemyObj.y - 1,"HP: " .. tostring(EnemyHealth))
+        Enemy:Draw(EnemyObj.x,EnemyObj.y)
+    end
+    
+    UICanvas:Text(81,12,".")
+    
+    Player:Draw(5,10)
+end
+
+function PlayerInput()
+    local playerAngle = UICanvas:InputField_Int(0,20,"Angle: ")
+    local playerSpeed = UICanvas:InputField_Int(0,21,"Speed: ")
+    local distance = Math.MaxDistance(playerSpeed,playerAngle)
+    print(distance)
+
+    local result = IsEnemyInDistance(distance,EnemyObj.x)
+    if result == true then
+        EnemyHealth = EnemyHealth - 1
+    end
+
+    print(result)
+end
+
+--Main core loop
+while true do
+    Game()
+    PlayerInput()
+    Console.Sleep(1)
+    Console.Clear()
+end

@@ -323,10 +323,7 @@ void Lua_Test()
 	int lua_source = luaL_dofile(L, "src/LuaScripts/LuaScript.lua");
 	if (IsLuaValid(L, lua_source))
 	{
-
-
 	}
-
 	lua_close(L);
 }
 
