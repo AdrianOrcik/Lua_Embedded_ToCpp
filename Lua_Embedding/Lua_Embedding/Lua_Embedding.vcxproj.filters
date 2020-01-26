@@ -29,6 +29,7 @@
     <None Include="lua53.dll" />
     <None Include="Lua535\lua53.dll" />
     <None Include="src\LuaScripts\LuaScript.lua" />
+    <None Include="src\LuaScripts\LuaTest.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lua535\include\lauxlib.h">
