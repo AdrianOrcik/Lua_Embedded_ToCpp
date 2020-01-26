@@ -120,6 +120,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="src\_Old\SourceCode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lua53.dll" />

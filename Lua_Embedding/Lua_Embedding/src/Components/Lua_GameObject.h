@@ -12,7 +12,7 @@ struct Lua_GameObject
 	Lua_GameObject() :x(0), y(0) {}
 	~Lua_GameObject() {}
 
-	void Move(int _x, int _y)
+	void Set(int _x, int _y)
 	{
 		x += _x;
 		y += _y;
@@ -82,12 +82,12 @@ int Lua_GameObject_Destroy(lua_State* L)
 	return 1;
 }
 
-int Lua_GameObject_Move(lua_State* L)
+int Lua_GameObject_Set(lua_State* L)
 {
 	Lua_GameObject* gameObject = (Lua_GameObject*)lua_touserdata(L, -3);
 	int x = lua_tonumber(L, -2);
 	int y = lua_tonumber(L, -1);
-	gameObject->Move(x, y);
+	gameObject->Set(x, y);
 	return 1;
 }
 
@@ -109,8 +109,8 @@ void Lua_Init_GameObject(lua_State* L)
 	lua_pushcfunction(L, Lua_GameObject_Create);
 	lua_setfield(L, -2, "Create");
 
-	lua_pushcfunction(L, Lua_GameObject_Move);
-	lua_setfield(L, -2, "Move");
+	lua_pushcfunction(L, Lua_GameObject_Set);
+	lua_setfield(L, -2, "Set");
 
 	lua_pushcfunction(L, Lua_GameObject_Print);
 	lua_setfield(L, -2, "Print");
