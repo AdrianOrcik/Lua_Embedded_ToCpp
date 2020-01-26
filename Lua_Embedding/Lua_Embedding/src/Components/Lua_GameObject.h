@@ -2,7 +2,6 @@
 #include "../lua.hpp"
 #include <iostream>
 #include <string>
-#include <assert.h>
 #include "../Components/Lua_Sprite.h"
 
 struct Lua_GameObject
@@ -19,7 +18,7 @@ struct Lua_GameObject
 		y += _y;
 	}
 
-	void Draw()
+	void Print()
 	{
 		std::cout << this << " x:" << x << " y:" << y << std::endl;
 	}
@@ -92,10 +91,10 @@ int Lua_GameObject_Move(lua_State* L)
 	return 1;
 }
 
-int Lua_GameObject_Draw(lua_State* L)
+int Lua_GameObject_Print(lua_State* L)
 {
 	Lua_GameObject* gameObject = (Lua_GameObject*)lua_touserdata(L, -1);
-	gameObject->Draw();
+	gameObject->Print();
 	return 0;
 }
 
@@ -113,8 +112,8 @@ void Lua_Init_GameObject(lua_State* L)
 	lua_pushcfunction(L, Lua_GameObject_Move);
 	lua_setfield(L, -2, "Move");
 
-	lua_pushcfunction(L, Lua_GameObject_Draw);
-	lua_setfield(L, -2, "Draw");
+	lua_pushcfunction(L, Lua_GameObject_Print);
+	lua_setfield(L, -2, "Print");
 
 	//Table Behaviour
 	luaL_newmetatable(L, "GameObject_MetaTable");

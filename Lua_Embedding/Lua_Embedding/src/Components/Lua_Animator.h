@@ -2,7 +2,6 @@
 #include "../lua.hpp"
 #include <iostream>
 #include <string>
-#include <assert.h>
 #include <vector>
 #include <Windows.h>
 #include <fstream>
@@ -36,7 +35,6 @@ struct Lua_Animator
 			}
 			reader.close();
 			m_AnimationSheetHeight = imgSize;
-			//m_Sprite = art;
 			m_AnimationSheet.push_back(art);
 		}
 	}
@@ -108,8 +106,8 @@ void Lua_Init_Animator(lua_State* L)
 {
 	//Table
 	lua_newtable(L);
-	int animator_Table_ID = lua_gettop(L);
-	lua_pushvalue(L, animator_Table_ID);
+	int tableID = lua_gettop(L);
+	lua_pushvalue(L, tableID);
 	lua_setglobal(L, "Animator");
 
 	lua_pushcfunction(L, Lua_Animator_Create);
@@ -128,6 +126,6 @@ void Lua_Init_Animator(lua_State* L)
 	lua_settable(L, -3);
 
 	lua_pushstring(L, "__index");
-	lua_pushvalue(L, animator_Table_ID);
+	lua_pushvalue(L, tableID);
 	lua_settable(L, -3);
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "../lua.hpp"
-#include "src/DebugLuaStack.h"
 #include <iostream>
 #include <Windows.h>
 #include <ctime>
@@ -41,8 +40,8 @@ void Lua_Init_Console(lua_State* L)
 {
 	//Table
 	lua_newtable(L);
-	int console_Table_ID = lua_gettop(L);
-	lua_pushvalue(L, console_Table_ID);
+	int tableID = lua_gettop(L);
+	lua_pushvalue(L, tableID);
 	lua_setglobal(L, "Console");
 
 	lua_pushcfunction(L, Lua_Console_Sleep);
