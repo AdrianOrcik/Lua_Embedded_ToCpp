@@ -57,8 +57,8 @@ maincanvas:Text(11,10,"Your Value: " + tostring(value))
   * Print object position on screen
   
 ```python
-GO = GameObject.Create()
-GO:Set(10,10)
+box = GameObject.Create()
+box:Set(10,10)
 ```
   
 #### Sprite
