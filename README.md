@@ -4,15 +4,14 @@ LUA based project build on CPP Embedded API
 
 :bulb: Idea
 ---------
-Create game oriented LUA to CPP based embedded project with easy game loop.
-Game loop will be used public API in LUA from native cpp app.
+Create game-oriented LUA to C++ based embedded project with the easy game loop.
+The game loop will be used public API in LUA from the native C++ app.
 
 #### Game Loop
 Point of the small game is shot enemy tank by set angle and speed of your projectile.
 Projectiles is calculated by oblique litter formulas.
 
 ![image](https://user-images.githubusercontent.com/14979589/73132744-9a9b6980-4027-11ea-906c-40a675e8705d.png)
-
 
 :tada: Result
 ---------
@@ -79,13 +78,13 @@ playerImg:Draw(10,10)
 ```
 
 #### Animator
-Animator component is able to create frame to frame animations from ASCII images
+Animator component is able to create frame by frame animations from ASCII images
 * void Create()
   * Create animator controller object
 * void AddToSheet(filePath,imgSize)
   * Load sprite from file and add to animation stack
 * void Animate(x,y,frameDelay)
-  * Draw frames as animated on x,y position in console
+  * Draw frames as animated on x,y position in the console
   * frameDelay in miliseconds
   
 ```python
