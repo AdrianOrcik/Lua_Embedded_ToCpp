@@ -4,7 +4,7 @@ LUA based project build on CPP Embedded API
 
 :bulb: Idea
 ---------
-Create game-oriented LUA to C++ based embedded project with the easy game loop.
+Create game-oriented LUA to C++ based embedded project with the easy game loop. <br>
 The game loop will be used public API in LUA from the native C++ app.
 
 #### Game Loop
